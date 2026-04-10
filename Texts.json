@@ -1,0 +1,9 @@
+{
+  "frases": [
+    { "texto": "El inicio no es el final", "color": "#ffffff" },
+    { "texto": "Ellos ya te vieron", "color": "#ff3b3b" },
+    { "texto": "No confíes en lo que ves", "color": "#3a6cff" },
+    { "texto": "Todo se repite...", "color": "#aaaaaa" },
+    { "texto": "Ya estuviste aquí antes", "color": "#00ffff" }
+  ]
+}

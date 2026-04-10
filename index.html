@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panaverso</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="PanaversoLogo2.png" type="image/png">
+
+    <style>
+        @font-face {
+            font-family: 'PixelMplus12';
+            src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'PixelMplus12', monospace;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="fade" class="prescript idle">
+        
+        
+        <img src="PanaversoLogo.png" class="logo">
+
+        <audio id="sonido" src="IndexSound.mp3"></audio>
+
+        <p id="subtexto" class="subtexto">You must follow the indicated Fragmented essence</p>
+
+    </div>
+
+</body>
+<script>
+
+  const hoy = obtenerFechaHoy();
+  let indexGuardado = localStorage.getItem("fraseIndex");
+  let fechaGuardada = localStorage.getItem("fechaFrase");
+
+  const elemento = document.getElementById("subtexto");
+
+  let bloqueado = false;
+
+  const sonido = document.getElementById("sonido");
+
+  function obtenerFechaHoy() {
+    const hoy = new Date();
+    return hoy.getFullYear() + "-" + (hoy.getMonth()+1) + "-" + hoy.getDate();
+  }
+
+  const textos = [
+    { texto: "Sit down, look and feel, because the only thing you will feel is your path and its journey, get closer to it and tell it.", color: "#ffffff" },
+    { texto: "Observe the flow of water, count how many drops fall during your thought, and share that information.", color: "#ffffff" },
+    { texto: "Your path is not lonely; count how many entered and exited to take a bend, and without further ado, go back to sleep.", color: "#ffffff" },
+    { texto: "Justice is what they call fair, but what a scarce thing it is, that's all you need to know now.", color: "#ffffff" },
+    { texto: "You've tried this before, haven't you? Turn your memory over and look back to see the way.", color: "#ffffff" },
+    { texto: "Walk while you observe, look when you think, and reason when you act. keep going.", color: "#ffffff" },
+    { texto: "Don't just see, feel and describe the first thing you admire, then desynchronize with it.", color: "#ffffff" },
+    { texto: "Hide from those thoughts that will tell you what to do, because none of them will be right. Keep searching.", color: "#ffffff" },
+    { texto: "When your thoughts begin to repeat, do not answer them. Wait until one feels different. Follow that one.", color: "#ffffff" },
+    { texto: "What are your intentions? Think about it, look for what no one else is looking for. Find the answer.", color: "#ffffff" },
+    { texto: "Find a mirror, it will tell you who you are. Don't stop, find out who you will be.", color: "#ffffff" },
+    { texto: "Be grateful for what you see in front of you, live, breathe. That will keep you ready.", color: "#ffffff" },
+    { texto: "Follow the wind. wherever it blows, you can find your way. When you arrive, ask the first person you see for the time.", color: "#ffffff" },
+    { texto: "Eat and enjoy, finish by washing those who were entrusted with the function of helping you, look and be proud.", color: "#ffffff" },
+    { texto: "You feel selfish, motivated, or maybe not... but it destroys more than you can find in one place.", color: "#ffffff" },
+    { texto: "Fear, that's something you feel all the time. What do you feel now? Observe it. Tell me what you fear and get rid of its weight.", color: "#ffffff" },
+    { texto: "Don't get distracted, look ahead, don't get distracted, stop, take three steps. What happened wasn't magic, it was destiny. Finish drinking your water.", color: "#ffffff" },
+    { texto: "Don't worry, sit down, relax, the world won't always be against you. Think about what happened and what could have happened, then stop. Breathe. Relax.", color: "#ffffff" },
+    { texto: "Wherever you are, look to the right, left, behind you, and then back to the right again. Don't worry, that's the right place to end up.", color: "#ffffff" },
+    { texto: "Historically, you were, you are, and you will be you. Don't regret it. Look at your mistakes, look at your achievements. Be proud.", color: "#ffffff" },
+    { texto: "Make 30 people laugh. Don't look at their faces, just make them laugh. Make yourself happy.", color: "#ffffff" }
+  ];
+
+  const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz%#!&$_0123456789+-@'Ɛ";
+
+  let indexActual;
+
+  if (fechaGuardada === hoy && indexGuardado !== null) {
+    indexActual = parseInt(indexGuardado);
+  } else {
+    indexActual = Math.floor(Math.random() * textos.length);
+    localStorage.setItem("fraseIndex", indexActual);
+    localStorage.setItem("fechaFrase", hoy);
+  }
+
+  let ultimo = -1;
+
+ 
+
+ if (fechaGuardada === hoy && indexGuardado !== null) {
+   const frase = textos[parseInt(indexGuardado)];
+
+   elemento.style.color = frase.color;
+   elemento.textContent = frase.texto;
+
+   elemento.style.pointerEvents = "none";
+
+  } else {
+
+   elemento.style.pointerEvents = "auto";
+
+   elemento.addEventListener("click", () => {
+
+    let random;
+
+    do {
+      random = Math.floor(Math.random() * textos.length);
+    } while (random == indexGuardado);
+
+    const frase = textos[random];
+
+  
+    localStorage.setItem("fraseIndex", random);
+    localStorage.setItem("fechaFrase", hoy);
+
+  
+    elemento.style.color = frase.color;
+    efectoDecrypt(elemento, frase.texto);
+
+  
+    elemento.style.pointerEvents = "none";
+  });
+}
+
+
+
+function efectoDecrypt(elemento, textoFinal) {
+
+  let iteracion = 0;
+  let ultimoSonido = 0;
+
+  const intervalo = setInterval(() => {
+
+    elemento.innerHTML = textoFinal
+      .split("")
+      .map((letra, index) => {
+
+        if (index < iteracion) {
+          return textoFinal[index];
+        }
+
+        return letras[Math.floor(Math.random() * letras.length)];
+      })
+      .join("");
+
+    const ahora = Date.now();
+
+    if (iteracion >= textoFinal.length) {
+      clearInterval(intervalo);
+    }
+
+    iteracion += 0.7;
+
+  }, 40);
+}
+</script>
+</html>
