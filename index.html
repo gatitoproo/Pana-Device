@@ -72,7 +72,7 @@
     { texto: "Don't worry, sit down, relax, the world won't always be against you. Think about what happened and what could have happened, then stop. Breathe. Relax.", color: "#ffffff" },
     { texto: "Wherever you are, look to the right, left, behind you, and then back to the right again. Don't worry, that's the right place to end up.", color: "#ffffff" },
     { texto: "Historically, you were, you are, and you will be you. Don't regret it. Look at your mistakes, look at your achievements. Be proud.", color: "#ffffff" },
-    { texto: "Make 30 people laugh. Don't look at their faces, just make them laugh. Make yourself happy.", color: "#ffffff" }
+    { texto: "Make 30 people laugh. Don't look at their faces, just make them laugh. Make yourself happy. ", color: "#ffffff" }
   ];
 
   const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz%#!&$_0123456789+-@'Ɛ";
@@ -120,7 +120,7 @@
   
     elemento.style.color = frase.color;
     efectoDecrypt(elemento, frase.texto);
-
+    document.getElementById("sonido").play();
   
     elemento.style.pointerEvents = "none";
   });
@@ -133,6 +133,19 @@ function efectoDecrypt(elemento, textoFinal) {
   let iteracion = 0;
   let ultimoSonido = 0;
 
+  const longitud = textoFinal.length;
+  const palabras = textoFinal.split(" ").length;
+
+  let velocidad;
+
+  if (palabras <= 80) {
+    velocidad = 10; 
+  } else if (palabras <= 200) {
+    velocidad = 40; 
+  } else {
+    velocidad = 80;
+  }
+  
   const intervalo = setInterval(() => {
 
     elemento.innerHTML = textoFinal
@@ -153,9 +166,9 @@ function efectoDecrypt(elemento, textoFinal) {
       clearInterval(intervalo);
     }
 
-    iteracion += 0.7;
+    iteracion += longitud / 100;
 
-  }, 40);
+  }, velocidad);
 }
 </script>
 </html>

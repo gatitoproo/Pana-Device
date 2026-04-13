@@ -27,9 +27,10 @@ body {
 
 #fade {
   position: absolute;
-  top: 25%;
+  top: 25vh;
   left: 50%;
-  transform: translate(-50%, 10%);
+  width: 1000px;
+  margin-left: -500px;
   font-family: 'PixelMplus12', monospace;
   font-size: 27px;
   color: #FFFFFF;
@@ -76,7 +77,14 @@ body {
 }
 
 .logo {
-  width: 30%;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px;
+  align-items: center;
+  justify-content: center;
+  width: 270px;
   filter: drop-shadow(0 0 1px #ffffff)
           drop-shadow(0 0 15px #ffffff)
           drop-shadow(0 0 40px #ffffff);
@@ -86,7 +94,9 @@ body {
 
 .subtexto {
   text-rendering: pixelated;
-  margin-top: 40px; 
+  flex-shrink: 0;
+  text-align: center;
+  margin-top: 300px; 
   font-size: 25px;
   color: white;
   text-shadow:
